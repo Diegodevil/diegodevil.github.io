@@ -1,40 +1,81 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | App_Multimedia_Arca</title>
-  </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: #231F20"></canvas>
-    <script src="Build/Build_Arca_Servidor.loader.js"></script>
-    <script>
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Mi App Unity WebGL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background-color: #222;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        var canvas = document.querySelector("#unity-canvas");
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
-        canvas.style.position = "fixed";
+    #loader {
+      width: 80%;
+      max-width: 400px;
+      height: 30px;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
 
-        document.body.style.textAlign = "left";
+    #progress-bar {
+      height: 100%;
+      background-color: #4CAF50;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    #progress-text {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    canvas {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cargando aplicación...</h1>
+  <div id="loader"><div id="progress-bar"></div></div>
+  <div id="progress-text">0%</div>
+
+  <script src="Build/build.loader.js"></script>
+  <script>
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+
+    createUnityInstance(document.createElement("canvas"), {
+      dataUrl: "Build/build.data",
+      frameworkUrl: "Build/build.framework.js",
+      codeUrl: "Build/build.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "TuEmpresa",
+      productName: "MiProyectoUnity",
+      productVersion: "1.0",
+      // Actualiza el preloader aquí
+      onProgress: (unityInstance, progress) => {
+        const percent = Math.floor(progress * 100);
+        progressBar.style.width = percent + "%";
+        progressText.textContent = percent + "%";
       }
-
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/Build_Arca_Servidor.data",
-        frameworkUrl: "Build/Build_Arca_Servidor.framework.js",
-        codeUrl: "Build/Build_Arca_Servidor.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "virtuality.com",
-        productName: "App_Multimedia_Arca",
-        productVersion: "0.1",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      });
-    </script>
-  </body>
+    }).then((unityInstance) => {
+      // Mostrar el canvas después de la carga
+      document.body.innerHTML = ''; // Limpia el preloader
+      document.body.appendChild(unityInstance.canvas);
+    }).catch((message) => {
+      alert("Error al cargar la aplicación: " + message);
+    });
+  </script>
+</body>
 </html>
