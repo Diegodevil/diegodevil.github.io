@@ -50,15 +50,15 @@
   <div id="loader"><div id="progress-bar"></div></div>
   <div id="progress-text">0%</div>
 
-  <script src="Build/build.loader.js"></script>
+  <script src="Build/build_arca.loader.js"></script>
   <script>
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
 
     createUnityInstance(document.createElement("canvas"), {
-      dataUrl: "Build/build.data",
-      frameworkUrl: "Build/build.framework.js",
-      codeUrl: "Build/build.wasm",
+      dataUrl: "Build/build_arca.data",
+      frameworkUrl: "Build/build_arca.framework.js",
+      codeUrl: "Build/build_arca.wasm",
       streamingAssetsUrl: "StreamingAssets",
       companyName: "TuEmpresa",
       productName: "MiProyectoUnity",
