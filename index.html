@@ -7,7 +7,7 @@
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=960 height=600 style="width: 960px; height: 600px; background: #231F20"></canvas>
-    <script src="Build/Build_Arca.loader.js"></script>
+    <script src="Build/Build_Arca_Servidor.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
@@ -25,9 +25,9 @@
       }
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/Build_Arca.data.br",
-        frameworkUrl: "Build/Build_Arca.framework.js.br",
-        codeUrl: "Build/Build_Arca.wasm.br",
+        dataUrl: "Build/Build_Arca_Servidor.data",
+        frameworkUrl: "Build/Build_Arca_Servidor.framework.js",
+        codeUrl: "Build/Build_Arca_Servidor.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "virtuality.com",
         productName: "App_Multimedia_Arca",
